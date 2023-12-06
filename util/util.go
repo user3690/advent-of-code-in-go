@@ -1,12 +1,33 @@
 package util
 
 import (
+	"fmt"
+	"os"
 	"strconv"
+	"strings"
 	"unicode"
 )
 
 type Integer interface {
 	int64 | int32 | int16 | int8 | int
+}
+
+func ReadFileInLines(filePath string) ([]string, error) {
+	var (
+		file []byte
+		err  error
+	)
+
+	file, err = os.ReadFile(filePath)
+	if err != nil {
+		return nil, fmt.Errorf("error while reading file: %w", err)
+	}
+
+	lines := strings.FieldsFunc(string(file), func(r rune) bool {
+		return r == '\n'
+	})
+
+	return lines, err
 }
 
 func StrToInt64(str string) (number int64, err error) {
