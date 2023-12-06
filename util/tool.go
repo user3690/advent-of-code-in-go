@@ -2,6 +2,7 @@ package util
 
 import (
 	"strconv"
+	"unicode"
 )
 
 type Integer interface {
@@ -30,4 +31,39 @@ func PowInt[T Integer](n T, m T) T {
 	}
 
 	return result
+}
+
+func FindNumbers(numbersStr string) (numbers []int64, err error) {
+	var (
+		start  = -1
+		end    = -1
+		number int64
+	)
+
+	numbersStr = numbersStr + "x"
+
+	for idx, char := range numbersStr {
+		if unicode.IsNumber(char) {
+			if start == -1 {
+				start = idx
+			}
+
+			end = idx
+		} else {
+			if start == -1 {
+				continue
+			}
+
+			number, err = StrToInt64(numbersStr[start : end+1])
+			if err != nil {
+				return numbers, err
+			}
+
+			numbers = append(numbers, number)
+			start = -1
+			end = -1
+		}
+	}
+
+	return numbers, err
 }
