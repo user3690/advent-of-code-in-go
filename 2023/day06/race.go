@@ -38,7 +38,7 @@ func Part1() uint32 {
 		log.Fatal(err)
 	}
 
-	wins := calculateCountOfWins(races)
+	wins := calculateAllWinPossibilitiesAllRaces(races)
 
 	log.Printf("execution took %v", time.Since(start).Milliseconds())
 
@@ -83,7 +83,7 @@ func prepareDataPart1(lines []string) ([]racePart1, error) {
 	return races, nil
 }
 
-func calculateCountOfWins(races []racePart1) uint32 {
+func calculateAllWinPossibilitiesAllRaces(races []racePart1) uint32 {
 	var (
 		winsPerRace, holdButtonTime uint16
 		wins                        uint32 = 1
