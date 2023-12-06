@@ -9,3 +9,5 @@ Uncomment your wanted solution in `main.go` and run it with `go run main.go` in 
   - [Day 3](2023/day03/engine.go) 
   - [Day 4](2023/day04/scratchcards.go)
     - Solved part 2 with recursion
+  - [Day 5](2023/day05/garden.go)
+    - Solved part 1 and 2 with an execution time of 2m38s
