@@ -107,6 +107,8 @@ func countSteps(instructions []instruction, nodes map[string]node) (steps uint64
 	return steps
 }
 
+// countStepsAsGhost the assumption is that the first found ending, is also the correct ending.
+// The input file is constructed that way, otherwise this shouldn't work.
 func countStepsAsGhost(instructions []instruction, nodes map[string]node) []int {
 	var (
 		curNodes []node
