@@ -16,3 +16,4 @@ Uncomment your wanted solution in `main.go` and run it with `go run main.go` in 
   - [Day 08](2023/day08/nodes.go)
     - LCM Solution
   - [Day 09](2023/day09/history.go)
+    - Solved with recursion for [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient#Pascal's_triangle)

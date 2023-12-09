@@ -75,6 +75,7 @@ func findNextValueInHistory(history []int32) (int32, int32) {
 	return nextValue, prevValue
 }
 
+// calculateSequenceOfDifferences https://en.wikipedia.org/wiki/Binomial_coefficient#Pascal's_triangle
 func calculateSequenceOfDifferences(historyMatrix [][]int32, history []int32) [][]int32 {
 	var (
 		isNonZeroValue                    = false
