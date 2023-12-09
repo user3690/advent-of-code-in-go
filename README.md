@@ -15,5 +15,6 @@ Uncomment your wanted solution in `main.go` and run it with `go run main.go` in 
   - [Day 07](2023/day07/camel.go)
   - [Day 08](2023/day08/nodes.go)
     - LCM Solution
+    - maybe other solutions: [chinese remainder theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem), [cycle detection](https://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare)
   - [Day 09](2023/day09/history.go)
     - Solved with recursion for [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient#Pascal's_triangle)
