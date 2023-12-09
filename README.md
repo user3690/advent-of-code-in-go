@@ -13,3 +13,6 @@ Uncomment your wanted solution in `main.go` and run it with `go run main.go` in 
     - Solved part 1 and 2 with an execution time of 2m38s
   - [Day 06](2023/day06/race.go)
   - [Day 07](2023/day07/camel.go)
+  - [Day 08](2023/day08/nodes.go)
+    - LCM Solution
+  - [Day 09](2023/day09/history.go)
