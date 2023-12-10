@@ -211,7 +211,7 @@ func findWalkableNeighborsForStartPos(playingField pipeMap, startTile tile) []ti
 
 // countInsideTiles for better visuals, I convert the letters '|-LJ7F' => '│─└┘┐┌'
 // at every vertical, northWestBend, northEastBend I assume that I enter an inside area and at the next occurrence
-// of these symbols, I assume that I left the inside of the maze
+// of these symbols, I assume that I left the inside area of the maze
 func countInsideTiles(playingField pipeMap, rows int, cols int) uint16 {
 	var (
 		i, j        int
