@@ -29,7 +29,7 @@ type tile struct {
 
 type pipeMap = map[position]tile
 
-func Part1() uint64 {
+func BothParts() {
 	var (
 		lines        []string
 		playingField pipeMap
@@ -50,9 +50,15 @@ func Part1() uint64 {
 		log.Fatal(err)
 	}
 
-	fmt.Printf("total steps in loop: %d, farthest point: %d", steps, steps/2)
+	insideArea := countInsideTiles(playingField, len(lines), len(lines[0]))
+	fmt.Printf(
+		"total steps in loop: %d, farthest point: %d, inside area is %d tiles large\n",
+		steps,
+		steps/2,
+		insideArea,
+	)
 
-	return steps
+	return
 }
 
 func prepareData(lines []string) (pipeMap, tile) {
@@ -187,8 +193,8 @@ func findWalkableNeighborsForStartPos(playingField pipeMap, startTile tile) []ti
 	// get lower tile
 	walkableTile = playingField[position{col: startTile.pos.col, row: startTile.pos.row + 1}]
 	if walkableTile.pipeType == vertical ||
-		walkableTile.pipeType == SouthWestBend ||
-		walkableTile.pipeType == southEastBend {
+		walkableTile.pipeType == northEastBend ||
+		walkableTile.pipeType == northWestBend {
 		neighbors = append(neighbors, walkableTile)
 	}
 
@@ -201,4 +207,61 @@ func findWalkableNeighborsForStartPos(playingField pipeMap, startTile tile) []ti
 	}
 
 	return neighbors
+}
+
+// countInsideTiles for better visuals, I convert the letters '|-LJ7F' => '│─└┘┐┌'
+// at every vertical, northWestBend, northEastBend I assume that I enter an inside area and at the next occurrence
+// of these symbols, I assume that I left the inside of the maze
+func countInsideTiles(playingField pipeMap, rows int, cols int) uint16 {
+	var (
+		i, j        int
+		insideCount uint16
+		newTile     tile
+		inside      bool
+		convert     = map[rune]rune{
+			ground:        ground,
+			vertical:      '│',
+			horizontal:    horizontal,
+			northEastBend: '└',
+			northWestBend: '┘',
+			SouthWestBend: '┐',
+			southEastBend: '┌',
+			startingPos:   'X',
+		}
+	)
+
+	for i < rows {
+		j = 0
+		inside = false
+		for j < cols {
+			newTile = playingField[position{row: uint16(i), col: uint16(j)}]
+			if newTile.discovered &&
+				(newTile.pipeType == vertical ||
+					newTile.pipeType == startingPos ||
+					newTile.pipeType == northWestBend ||
+					newTile.pipeType == northEastBend) {
+				inside = !inside
+			}
+
+			if (inside && newTile.pipeType == ground && j != cols-1) || (inside && !newTile.discovered) {
+				insideCount++
+				fmt.Print(string('$'))
+				j++
+				continue
+			}
+
+			if newTile.discovered {
+				fmt.Print(string(convert[newTile.pipeType]))
+			} else {
+				fmt.Print(string(ground))
+			}
+
+			j++
+		}
+
+		fmt.Print("\n")
+		i++
+	}
+
+	return insideCount
 }
