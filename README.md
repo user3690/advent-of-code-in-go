@@ -18,3 +18,4 @@ Uncomment your wanted solution in `main.go` and run it with `go run main.go` in 
     - maybe other solutions: [chinese remainder theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem), [cycle detection](https://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare)
   - [Day 09](2023/day09/history.go)
     - Solved with recursion for [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient#Pascal's_triangle)
+  - [Day 10](2023/day10/pipes.go)
