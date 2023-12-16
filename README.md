@@ -2,6 +2,7 @@
 ## How to run
 You need `go version go1.21.x` to run the solutions.
 Uncomment your wanted solution in `main.go` and run it with `go run main.go` in the root dir of this repository.
+The input has to be put in a `input.txt` file in for example: `./2023/day01/input.txt`.
 ## Solved Puzzles
 - Solutions for 2023
   - [Day 01](2023/day01/count.go)
