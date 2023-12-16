@@ -19,3 +19,6 @@ Uncomment your wanted solution in `main.go` and run it with `go run main.go` in 
   - [Day 09](2023/day09/history.go)
     - Solved with recursion for [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient#Pascal's_triangle)
   - [Day 10](2023/day10/pipes.go)
+  - [Day 11](2023/day11/galaxy.go)
+    - First solution didn't work. 4100 difference to correct answer in part 1. Couldn't find the bug, test result was correct
+    - rebuild it with another solution
