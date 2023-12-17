@@ -16,16 +16,16 @@ The input has to be put in a `input.txt` file in for example: `./2023/day01/inpu
   - [Day 07](2023/day07/camel.go)
   - [Day 08](2023/day08/nodes.go)
     - LCM Solution
-    - maybe other solutions: [chinese remainder theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem), [cycle detection](https://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare)
+    - Maybe other solutions: [chinese remainder theorem](https://en.wikipedia.org/wiki/Chinese_remainder_theorem), [cycle detection](https://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare)
   - [Day 09](2023/day09/history.go)
     - Solved with recursion for [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient#Pascal's_triangle)
   - [Day 10](2023/day10/pipes.go)
-    - inclusive visual representation of pipe loop
+    - Inclusive visual representation of pipe loop
   - [Day 11](2023/day11/galaxy.go)
     - First solution didn't work. 4100 difference to correct answer in part 1. Couldn't find the bug, test result was correct
-    - rebuild it with another solution
+    - Rebuild it with another solution
   - [Day 12](2023/day12/spring.go)
-    - solved with recursion
-    - without cache runtime 15min+ (didn't complete it)
-    - implemented cache, runtime < 1s
-    - thanks to [https://github.com/mebeim/aoc/](https://github.com/mebeim/aoc/tree/master/2023#part-2-9) for cache idea
+    - Solved with recursion
+    - Without cache runtime 15min+ (didn't complete it)
+    - Implemented cache, runtime < 1s
+    - Thanks to [https://github.com/mebeim/aoc/](https://github.com/mebeim/aoc/tree/master/2023#part-2-9) for cache idea
