@@ -108,10 +108,6 @@ type point struct {
 	y int16 // col
 }
 
-// part 2 test1 94
-// part 2 test2 71
-// Part 1 674
-// Part 2 773
 func BothParts() {
 	var (
 		lines                     []string
