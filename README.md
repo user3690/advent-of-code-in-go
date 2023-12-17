@@ -29,3 +29,6 @@ The input has to be put in a `input.txt` file in for example: `./2023/day01/inpu
     - Without cache runtime 15min+ (didn't complete it)
     - Implemented cache, runtime < 1s
     - Thanks to [https://github.com/mebeim/aoc/](https://github.com/mebeim/aoc/tree/master/2023#part-2-9) for cache idea
+  - [Day 17](2023/day17/crucible.go)
+    - used priority queue
+    - BFS (Breadth First Search)
