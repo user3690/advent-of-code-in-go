@@ -30,5 +30,6 @@ The input has to be put in a `input.txt` file in for example: `./2023/day01/inpu
     - Implemented cache, runtime < 1s
     - Thanks to [https://github.com/mebeim/aoc/](https://github.com/mebeim/aoc/tree/master/2023#part-2-9) for cache idea
   - [Day 17](2023/day17/crucible.go)
-    - used priority queue
+    - Used priority queue
+    - Thanks to [teivah](https://github.com/teivah/advent-of-code/blob/lib/lib_ds_pq.go) for generic priority queue implementation
     - BFS (Breadth First Search)

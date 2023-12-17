@@ -1,6 +1,7 @@
 package day17
 
 import (
+	"errors"
 	"fmt"
 	"github.com/user3690/advent-of-code-in-go/util"
 	"log"
@@ -113,10 +114,10 @@ type point struct {
 // Part 2 773
 func BothParts() {
 	var (
-		lines      []string
-		cityBlocks map[point]cityBlock
-		rows, cols int
-		err        error
+		lines                     []string
+		cityBlocks                map[point]cityBlock
+		rows, cols, leastHeatLoss int
+		err                       error
 	)
 
 	lines, err = util.ReadFileInLines("./2023/day17/input_test2.txt")
@@ -129,8 +130,17 @@ func BothParts() {
 		log.Fatal(err)
 	}
 
-	fmt.Println(findRouteWithLeastHeatLoss(cityBlocks, rows, cols, 0, 3))
-	fmt.Println(findRouteWithLeastHeatLoss(cityBlocks, rows, cols, 4, 10))
+	leastHeatLoss, err = findRouteWithLeastHeatLoss(cityBlocks, rows, cols, 0, 3)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(leastHeatLoss)
+
+	leastHeatLoss, err = findRouteWithLeastHeatLoss(cityBlocks, rows, cols, 4, 10)
+	if err != nil {
+		log.Fatal(err)
+	}
+	fmt.Println(leastHeatLoss)
 }
 
 func createCityBlocks(
@@ -175,13 +185,21 @@ func createCityBlocks(
 	return cityBlocks, rows, cols, err
 }
 
-func findRouteWithLeastHeatLoss(cityBlocks map[point]cityBlock, rows int, cols int, minStraight, maxStraight uint8) int {
+func findRouteWithLeastHeatLoss(
+	cityBlocks map[point]cityBlock,
+	rows int,
+	cols int,
+	minStraight, maxStraight uint8,
+) (int, error) {
 	targetBlock := cityBlocks[point{x: int16(rows - 1), y: int16(cols - 1)}]
 
-	priorityQueue := util.NewPriorityQueue(func(itemA, itemB cityBlock) int {
-		return itemA.heatLoss - itemB.heatLoss
-	})
+	priorityQueue := util.NewPriorityQueue(
+		func(itemA, itemB cityBlock) int {
+			return itemA.heatLoss - itemB.heatLoss
+		},
+	)
 
+	// first block below start block
 	priorityQueue.Push(cityBlock{
 		state: state{
 			pos: position{
@@ -195,6 +213,7 @@ func findRouteWithLeastHeatLoss(cityBlocks map[point]cityBlock, rows int, cols i
 		},
 	})
 
+	// first block to the right of start block
 	priorityQueue.Push(cityBlock{
 		state: state{
 			pos: position{
@@ -221,7 +240,7 @@ func findRouteWithLeastHeatLoss(cityBlocks map[point]cityBlock, rows int, cols i
 
 		totalHeatLoss := cityBlocks[curBlockPoint].heatLoss + item.heatLoss
 		if curBlockPoint == targetBlock.state.pos.poi {
-			return totalHeatLoss
+			return totalHeatLoss, nil
 		}
 
 		if heatLossVal, exists := visited[item.state]; exists {
@@ -257,5 +276,5 @@ func findRouteWithLeastHeatLoss(cityBlocks map[point]cityBlock, rows int, cols i
 		}
 	}
 
-	panic("no path found")
+	return 0, errors.New("no path found")
 }
