@@ -20,6 +20,7 @@ The input has to be put in a `input.txt` file in for example: `./2023/day01/inpu
   - [Day 09](2023/day09/history.go)
     - Solved with recursion for [binomial coefficient](https://en.wikipedia.org/wiki/Binomial_coefficient#Pascal's_triangle)
   - [Day 10](2023/day10/pipes.go)
+    - inclusive visual representation of pipe loop
   - [Day 11](2023/day11/galaxy.go)
     - First solution didn't work. 4100 difference to correct answer in part 1. Couldn't find the bug, test result was correct
     - rebuild it with another solution
