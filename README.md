@@ -23,3 +23,8 @@ The input has to be put in a `input.txt` file in for example: `./2023/day01/inpu
   - [Day 11](2023/day11/galaxy.go)
     - First solution didn't work. 4100 difference to correct answer in part 1. Couldn't find the bug, test result was correct
     - rebuild it with another solution
+  - [Day 12](2023/day12/spring.go)
+    - solved with recursion
+    - without cache runtime 15min+ (didn't complete it)
+    - implemented cache, runtime < 1s
+    - thanks to [https://github.com/mebeim/aoc/](https://github.com/mebeim/aoc/tree/master/2023#part-2-9) for cache idea
