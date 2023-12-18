@@ -1,6 +1,8 @@
 package main
 
-import "github.com/user3690/advent-of-code-in-go/2023/day17"
+import (
+	"github.com/user3690/advent-of-code-in-go/2023/day05"
+)
 
 func main() {
 	//fmt.Println(day01.BothParts())
@@ -8,6 +10,7 @@ func main() {
 	//fmt.Println(day03.BothParts())
 	//fmt.Println(day04.BothParts())
 	//fmt.Println(day05.BothParts())
+	day05.BothParts()
 	//fmt.Println(day06.Part1())
 	//fmt.Println(day06.Part2())
 	//fmt.Println(day07.Part1())
@@ -17,5 +20,5 @@ func main() {
 	//day10.BothParts()
 	//day11.BothParts()
 	//day12.BothParts()
-	day17.BothParts()
+	//day17.BothParts()
 }

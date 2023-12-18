@@ -11,7 +11,8 @@ The input has to be put in a `input.txt` file in for example: `./2023/day01/inpu
   - [Day 04](2023/day04/scratchcards.go)
     - Solved part 2 with recursion
   - [Day 05](2023/day05/garden.go)
-    - Solved part 1 and 2 with an execution time of 2m38s
+    - Solved part 1 and 2 with an execution time of 2m38s and 20GB RAM usage
+    - Optimized part 2 with an execution time of 2m02s and 2GB RAM usage
   - [Day 06](2023/day06/race.go)
   - [Day 07](2023/day07/camel.go)
   - [Day 08](2023/day08/nodes.go)
