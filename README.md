@@ -33,4 +33,5 @@ The input has to be put in a `input.txt` file in for example: `./2023/day01/inpu
   - [Day 17](2023/day17/crucible.go)
     - Used priority queue
     - Thanks to [teivah](https://github.com/teivah/advent-of-code/blob/lib/lib_ds_pq.go) for generic priority queue implementation
-    - BFS (Breadth First Search)
+    - BFS (Breadth First Search) Solution
+    - Resource on path finding [redblobgames](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
