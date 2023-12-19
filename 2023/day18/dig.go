@@ -122,55 +122,6 @@ func newLavaPit(rows int, cols int, startingPoint point) lavaPit {
 	}
 }
 
-func (g *lavaPit) dig(dir direction, length uint8) (position, error) {
-	var (
-		newPosition position
-		newPoint    point
-		err         error
-	)
-
-	if (g.current.dir == up && dir == down) || (g.current.dir == down && dir == up) {
-		return newPosition, errors.New("cant go in opposite direction")
-	}
-
-	newPoint, err = g.current.Move(dir, length)
-	if err != nil {
-		return newPosition, fmt.Errorf("could not move in lavaPit: %w", err)
-	}
-
-	newPosition.poi = newPoint
-	newPosition.dir = dir
-
-	switch dir {
-	case up:
-		var i int16 = 0
-		for i <= int16(length) {
-			g.trench[g.current.poi.x-i][g.current.poi.y] = true
-			i++
-		}
-	case right:
-		var i int16 = 0
-		for i <= int16(length) {
-			g.trench[g.current.poi.x][g.current.poi.y+i] = true
-			i++
-		}
-	case down:
-		var i int16 = 0
-		for i <= int16(length) {
-			g.trench[g.current.poi.x+i][g.current.poi.y] = true
-			i++
-		}
-	case left:
-		var i int16 = 0
-		for i <= int16(length) {
-			g.trench[g.current.poi.x][g.current.poi.y-i] = true
-			i++
-		}
-	}
-
-	return newPosition, nil
-}
-
 func Part1() {
 	var (
 		lines        []string
@@ -180,7 +131,7 @@ func Part1() {
 
 	start := time.Now()
 
-	lines, err = util.ReadFileInLines("./2023/day18/input.txt")
+	lines, err = util.ReadFileInLines("./2023/day18/input_test.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -190,7 +141,7 @@ func Part1() {
 		log.Fatal(err)
 	}
 
-	_, err = digLoop(instructions)
+	_, err = calculateDigVolume(instructions)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -247,32 +198,34 @@ func stringToDirection(s string) (direction, error) {
 	}
 }
 
-func digLoop(instructions []digInstruction) (lavaPit, error) {
-	var (
-		newPosition position
-		err         error
-	)
+func calculateDigVolume(instructions []digInstruction) (emptyLavaPit lavaPit, err error) {
+	var insidePoint point
 
 	rows, cols, startingPoint := calculateProportions(instructions)
 	fmt.Println(rows, cols, startingPoint)
 
-	newLavaPit := newLavaPit(rows, cols, startingPoint)
+	emptyLavaPit = newLavaPit(rows, cols, startingPoint)
 
 	for _, instruction := range instructions {
-		newPosition, err = newLavaPit.dig(instruction.dir, instruction.length)
+		emptyLavaPit, err = digTrench(emptyLavaPit, instruction.dir, instruction.length)
 		if err != nil {
-			return newLavaPit, err
+			return emptyLavaPit, err
 		}
-
-		newLavaPit.current = newPosition
 	}
 
-	err = printLagoon(newLavaPit)
+	insidePoint, err = findPointInsideTrench(emptyLavaPit)
 	if err != nil {
-		return newLavaPit, err
+		return emptyLavaPit, err
 	}
 
-	return newLavaPit, nil
+	emptyLavaPit = digInsideAreaOfLavaPit(emptyLavaPit, insidePoint)
+
+	err = printLagoon(emptyLavaPit)
+	if err != nil {
+		return emptyLavaPit, err
+	}
+
+	return emptyLavaPit, nil
 }
 
 func calculateProportions(instructions []digInstruction) (rows int, cols int, startingPoint point) {
@@ -314,6 +267,134 @@ func calculateProportions(instructions []digInstruction) (rows int, cols int, st
 	startingPoint.y = int16(cols - maxWidth)
 
 	return rows + 1, cols + 1, startingPoint
+}
+
+func digTrench(freshLavaPit lavaPit, dir direction, length uint8) (lavaPit, error) {
+	var (
+		newPosition position
+		newPoint    point
+		err         error
+	)
+
+	if (freshLavaPit.current.dir == up && dir == down) || (freshLavaPit.current.dir == down && dir == up) {
+		return freshLavaPit, errors.New("cant go in opposite direction")
+	}
+
+	newPoint, err = freshLavaPit.current.Move(dir, length)
+	if err != nil {
+		return freshLavaPit, fmt.Errorf("could not move in lavaPit: %w", err)
+	}
+
+	newPosition.poi = newPoint
+	newPosition.dir = dir
+
+	switch dir {
+	case up:
+		var i int16 = 0
+		for i <= int16(length) {
+			freshLavaPit.trench[freshLavaPit.current.poi.x-i][freshLavaPit.current.poi.y] = true
+			i++
+		}
+	case right:
+		var i int16 = 0
+		for i <= int16(length) {
+			freshLavaPit.trench[freshLavaPit.current.poi.x][freshLavaPit.current.poi.y+i] = true
+			i++
+		}
+	case down:
+		var i int16 = 0
+		for i <= int16(length) {
+			freshLavaPit.trench[freshLavaPit.current.poi.x+i][freshLavaPit.current.poi.y] = true
+			i++
+		}
+	case left:
+		var i int16 = 0
+		for i <= int16(length) {
+			freshLavaPit.trench[freshLavaPit.current.poi.x][freshLavaPit.current.poi.y-i] = true
+			i++
+		}
+	}
+
+	freshLavaPit.current = newPosition
+
+	return freshLavaPit, nil
+}
+
+func findPointInsideTrench(trenchedLavaPit lavaPit) (newPoint point, err error) {
+	for i, row := range trenchedLavaPit.trench {
+		for j, isTrench := range row {
+			if j > 0 && j < len(row)-1 && !row[j-1] && isTrench && !row[j+1] {
+				newPoint = point{x: int16(i), y: int16(j + 1)}
+
+				return newPoint, nil
+			}
+		}
+	}
+
+	return newPoint, errors.New("no inside point found")
+}
+
+func digInsideAreaOfLavaPit(trenchedLavaPit lavaPit, insidePoint point) lavaPit {
+	queue := util.FiFoQueue[point]{}
+
+	for _, neighbour := range findNoTrenchNeighbours(trenchedLavaPit, insidePoint) {
+		queue.Push(neighbour)
+	}
+
+	for !queue.IsEmpty() {
+		currentPoint := queue.Pop()
+
+		// first we mark as trenched
+		trenchedLavaPit.trench[currentPoint.x][currentPoint.y] = true
+
+		// find not trenched neighbours
+		for _, neighbour := range findNoTrenchNeighbours(trenchedLavaPit, currentPoint) {
+			queue.Push(neighbour)
+		}
+	}
+
+	return trenchedLavaPit
+}
+
+func findNoTrenchNeighbours(trenchedLavaPit lavaPit, currentPoint point) (noTrenchNeighbours []point) {
+	var isTrench bool
+
+	maxHeight := len(trenchedLavaPit.trench)
+	maxWidth := len(trenchedLavaPit.trench[0])
+
+	// upper
+	if currentPoint.x-1 >= 0 {
+		isTrench = trenchedLavaPit.trench[currentPoint.x-1][currentPoint.y]
+		if !isTrench {
+			noTrenchNeighbours = append(noTrenchNeighbours, point{x: currentPoint.x - 1, y: currentPoint.y})
+		}
+	}
+
+	// right
+	if int(currentPoint.y+1) < maxWidth {
+		isTrench = trenchedLavaPit.trench[currentPoint.x][currentPoint.y+1]
+		if !isTrench {
+			noTrenchNeighbours = append(noTrenchNeighbours, point{x: currentPoint.x, y: currentPoint.y + 1})
+		}
+	}
+
+	// lower
+	if int(currentPoint.x+1) < maxHeight {
+		isTrench = trenchedLavaPit.trench[currentPoint.x+1][currentPoint.y]
+		if !isTrench {
+			noTrenchNeighbours = append(noTrenchNeighbours, point{x: currentPoint.x + 1, y: currentPoint.y})
+		}
+	}
+
+	// left
+	if currentPoint.y-1 >= 0 {
+		isTrench = trenchedLavaPit.trench[currentPoint.x][currentPoint.y-1]
+		if !isTrench {
+			noTrenchNeighbours = append(noTrenchNeighbours, point{x: currentPoint.x, y: currentPoint.y - 1})
+		}
+	}
+
+	return noTrenchNeighbours
 }
 
 func printLagoon(trenchedLavaPit lavaPit) error {
