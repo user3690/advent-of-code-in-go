@@ -36,6 +36,6 @@ The input has to be put in a `input.txt` file in for example: `./2023/day01/inpu
     - BFS (Breadth First Search) Solution
     - Resource on path finding [redblobgames](https://www.redblobgames.com/pathfinding/a-star/introduction.html)
   - [Day 18](2023/day18/dig.go)
-    - Part 1 is purely from me and is suitable for that task. For part 2 it isn't going to cut it anymore.
+    - The code for part 1 is purely from me and is suitable for that task. For part 2 it isn't going to cut it anymore.
     - Thanks to [teivah](https://github.com/teivah/) Part 2 is solved with [https://stackoverflow.com/a/717367](https://stackoverflow.com/a/717367) (EDIT section)
       - Another possible solution vector cross product
