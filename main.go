@@ -20,4 +20,5 @@ func main() {
 	//day12.BothParts()
 	//day17.BothParts()
 	day18.Part1()
+	day18.Part2()
 }
